@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def display(train_images, class_names, train_labels):
     """ display the first 25 images """
     plt.figure(figsize=(10,10))
@@ -13,6 +14,7 @@ def display(train_images, class_names, train_labels):
         plt.xlabel(class_names[train_labels[i]])
     plt.show()
 
+
 def display_single_prediction(predictions, test_labels, test_images, class_names, i=0):
     """ prediction next to image """
     plt.figure(figsize=(6,3))
@@ -21,6 +23,7 @@ def display_single_prediction(predictions, test_labels, test_images, class_names
     plt.subplot(1,2,2)
     plot_value_array(i, predictions,  test_labels)
     plt.show()
+
 
 def display_single_prediction2(test_labels,class_names,model,img):
     """ labeled x axis with other options """
@@ -42,6 +45,7 @@ def display_multiple_prediction(predictions, test_labels, test_images, class_nam
         plot_value_array(i, predictions, test_labels)
     plt.show()
 
+
 def plot_image(i, predictions_array, true_label, img, class_names):
     """ helper function to plot an image """
     predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
@@ -61,6 +65,7 @@ def plot_image(i, predictions_array, true_label, img, class_names):
                                 100*np.max(predictions_array),
                                 class_names[true_label]),
                                 color=color)
+
 
 def plot_value_array(i, predictions_array, true_label):
     """ helper function to plot values """
