@@ -8,7 +8,8 @@ A temporary repo for data processing and tensorflow model training. The importan
 
 Might need to use virtualenv - https://docs.python-guide.org/dev/virtualenvs/  
 To install requirements, run `pip3 install -r requirements.txt`  
-Might need to run `sudo apt-get install python3-tk` in the virtualenv
+Might need to run `sudo apt-get install python3-tk` in the virtualenv  
+Use python version 3.6
 
 ## Pizza Limerick
 
