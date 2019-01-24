@@ -19,7 +19,7 @@ def setup():
 def compile(model):
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['accuracy'],)
 
 def ml_model(train_images, train_labels):
     if isfile(JSON_PATH) and isfile(WEIGHTS_PATH):
