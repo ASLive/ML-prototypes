@@ -21,19 +21,17 @@ def compile(model):
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'],)
 
-def ml_model(train_images, train_labels):
-    if isfile(JSON_PATH) and isfile(WEIGHTS_PATH):
+def ml_model(train_images, train_labels, retrain=False, save=True):
+    if (not retrain) and isfile(JSON_PATH) and isfile(WEIGHTS_PATH):
         return read_model()
     else:
-        return make_model(train_images, train_labels)
+        return make_model(train_images, train_labels, save=save)
 
-
-def make_model(train_images, train_labels):
+def make_model(train_images, train_labels, save=True):
     model = setup()
     compile(model)
     model.fit(train_images, train_labels, epochs=5) # train
-    return save_model(model)
-
+    return save_model(model) if save else model
 
 def save_model(model):
     # serialize model to json
@@ -43,7 +41,6 @@ def save_model(model):
     # serialize weights to hdf5
     model.save_weights(WEIGHTS_PATH)
     return model
-
 
 def read_model():
     # load json and create model
