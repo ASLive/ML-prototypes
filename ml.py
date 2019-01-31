@@ -7,14 +7,12 @@ from os.path import isfile
 JSON_PATH = "./model.json"
 WEIGHTS_PATH = "./model.h5"
 
-
 def setup():
     return keras.Sequential([
         keras.layers.Flatten(input_shape=(240, 320, 3)),
         keras.layers.Dense(128, activation=tf.nn.relu),
-        keras.layers.Dense(10, activation=tf.nn.softmax),
+        keras.layers.Dense(30, activation=tf.nn.softmax),
     ])
-
 
 def compile(model):
     model.compile(optimizer='adam',

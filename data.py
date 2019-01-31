@@ -23,7 +23,8 @@ def read_data():
             # get list of file paths to each image
             image_path_list = [TRAIN_DATA_PATH+"/"+letter+"/"+file for file in image_list]
             float_count += 0.1
-            ret_class_names.append(float_count)
+            float_count = round(float_count,2)
+            ret_class_names.append(letter)
             print(letter, float_count)
             if len(image_path_list) > 0:
                 # iterate each image
