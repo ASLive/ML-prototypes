@@ -10,6 +10,7 @@ WEIGHTS_PATH = "./model.h5"
 def setup():
     return keras.Sequential([
         keras.layers.Flatten(input_shape=(240, 320, 3)),
+        # keras.layers.Flatten(input_shape=(28, 28)), # after training, accuracy can go up with this???
         keras.layers.Dense(128, activation=tf.nn.relu),
         keras.layers.Dense(30, activation=tf.nn.softmax),
     ])

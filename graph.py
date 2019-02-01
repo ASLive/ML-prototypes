@@ -69,7 +69,7 @@ def plot_value_array(i, predictions_array, true_label):
     plt.grid(False)
     plt.xticks([])
     plt.yticks([])
-    thisplot = plt.bar(range(27), predictions_array, color="#777777")
+    thisplot = plt.bar(np.arange(27), predictions_array, color="#777777")
     plt.ylim([0, 1])
     predicted_label = np.argmax(predictions_array)
 
