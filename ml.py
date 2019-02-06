@@ -7,33 +7,31 @@ from os.path import isfile
 JSON_PATH = "./model.json"
 WEIGHTS_PATH = "./model.h5"
 
-
 def setup():
     return keras.Sequential([
-        keras.layers.Flatten(input_shape=(28, 28)),
+        keras.layers.Flatten(input_shape=(240, 320, 3)),
+        # keras.layers.Flatten(input_shape=(28, 28)), # after training, accuracy can go up with this???
         keras.layers.Dense(128, activation=tf.nn.relu),
-        keras.layers.Dense(10, activation=tf.nn.softmax)
+        keras.layers.Dense(30, activation=tf.nn.softmax),
     ])
-
 
 def compile(model):
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['accuracy'],)
 
-def ml_model(train_images, train_labels):
-    if isfile(JSON_PATH) and isfile(WEIGHTS_PATH):
+def ml_model(train_images, train_labels, retrain=False, save=True):
+    if (not retrain) and isfile(JSON_PATH) and isfile(WEIGHTS_PATH):
         return read_model()
     else:
-        return make_model(train_images, train_labels)
+        return make_model(train_images, train_labels, save=save)
 
-
-def make_model(train_images, train_labels):
+def make_model(train_images, train_labels, save=True):
     model = setup()
     compile(model)
+    print(train_labels)
     model.fit(train_images, train_labels, epochs=5) # train
-    return save_model(model)
-
+    return save_model(model) if save else model
 
 def save_model(model):
     # serialize model to json
@@ -43,7 +41,6 @@ def save_model(model):
     # serialize weights to hdf5
     model.save_weights(WEIGHTS_PATH)
     return model
-
 
 def read_model():
     # load json and create model
