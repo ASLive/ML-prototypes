@@ -27,7 +27,7 @@ def display_single_prediction2(test_labels,class_names,model,img):
     img = (np.expand_dims(img,0)) # Add the image to a batch where it's the only member.
     predictions_single = model.predict(img)
     plot_value_array(0, predictions_single, test_labels)
-    _ = plt.xticks(range(10), class_names, rotation=45)
+    _ = plt.xticks(range(30), class_names, rotation=45)
     plt.show()
 
 def display_multiple_prediction(predictions, test_labels, test_images, class_names, num_rows=5, num_cols=3):
@@ -69,9 +69,7 @@ def plot_value_array(i, predictions_array, true_label):
     plt.grid(False)
     plt.xticks([])
     plt.yticks([])
-    thisplot = plt.bar(np.arange(27), predictions_array, color="#777777")
+    thisplot = plt.bar(range(10), predictions_array, color="#777777")
     plt.ylim([0, 1])
     predicted_label = np.argmax(predictions_array)
-
     thisplot[predicted_label].set_color('red')
-    thisplot[true_label].set_color('blue')

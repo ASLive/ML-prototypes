@@ -1,16 +1,14 @@
 import os
 import numpy as np
 import math
-from keras.preprocessing.image import array_to_img, img_to_array, load_img
+import matplotlib.pyplot as plt
 
-TRAIN_DATA_PATH = "../training_data"
-
-def load_data():
-    images, labels, class_names = read_data()
+def load_data(TRAIN_DATA_PATH):
+    images, labels, class_names = read_data(TRAIN_DATA_PATH)
     (train_images, train_labels), (test_images, test_labels) = split_data(images, labels)
     return [train_images, train_labels, test_images, test_labels, class_names]
 
-def read_data():
+def read_data(TRAIN_DATA_PATH):
     """read data from files"""
     ret_images = []
     ret_labels = []
@@ -30,8 +28,7 @@ def read_data():
                 # iterate each image
                 for i in range(len(image_path_list)):
                     # add image, letter to ret array
-                    image = load_img(image_path_list[i])  # this is a PIL image
-                    image = img_to_array(image)
+                    image = plt.imread(image_path_list[i])
                     ret_images.append(image)
                     ret_labels.append(float_count)
 
