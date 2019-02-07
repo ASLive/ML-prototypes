@@ -9,8 +9,7 @@ WEIGHTS_PATH = "./model.h5"
 
 def setup():
     return keras.Sequential([
-        keras.layers.Flatten(input_shape=(240, 320,3)),
-        # keras.layers.Flatten(input_shape=(28, 28, 3)),
+        keras.layers.Flatten(input_shape=(50, 50, 3)),
         keras.layers.Dense(128, activation=tf.nn.relu),
         keras.layers.Dense(10, activation=tf.nn.softmax),
     ])
