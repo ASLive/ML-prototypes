@@ -1,18 +1,14 @@
 import os
 import numpy as np
 import math
-from keras.preprocessing.image import array_to_img, img_to_array, load_img
-import tensorflow as tf
 import matplotlib.pyplot as plt
 
-TRAIN_DATA_PATH = "../training_data"
-
-def load_data():
-    images, labels, class_names = read_data()
+def load_data(TRAIN_DATA_PATH):
+    images, labels, class_names = read_data(TRAIN_DATA_PATH)
     (train_images, train_labels), (test_images, test_labels) = split_data(images, labels)
     return [train_images, train_labels, test_images, test_labels, class_names]
 
-def read_data():
+def read_data(TRAIN_DATA_PATH):
     """read data from files"""
     ret_images = []
     ret_labels = []
@@ -33,19 +29,9 @@ def read_data():
                 for i in range(len(image_path_list)):
                     # add image, letter to ret array
                     image = plt.imread(image_path_list[i])
-                    # image = load_img(image_path_list[i])  # this is a PIL image
-                    # image = img_to_array(image)
                     ret_images.append(image)
                     ret_labels.append(float_count)
 
-    # sess = tf.Session()
-    # for i in range(0, len(ret_images),10):
-    #     ret_images[i:i+10] = tf.image.resize_images(np.array(ret_images[i:i+10]),[28,28]).eval(session=sess)
-    #
-    # ret_images = np.array(ret_images)
-    # print(len(ret_images))
-    # print(len(ret_images[0]))
-    # print(type(ret_images))
     return np.array(ret_images), np.array(ret_labels), ret_class_names
 
 def unison_shuffled_copies(a, b):
