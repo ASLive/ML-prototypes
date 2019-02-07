@@ -16,7 +16,6 @@ if __name__ == "__main__":
     no_save_arg = not (len(sys.argv) > 2 and (sys.argv[2].lower() == 'no-save'))
 
     train_images, train_labels, test_images, test_labels, class_names = load_data()
-    test_labels = [int(name*10)-1 for name in test_labels] # for graphing
 
     model = ml_model(train_images, train_labels, retrain_arg, no_save_arg)
 
@@ -27,6 +26,7 @@ if __name__ == "__main__":
     predictions = model.predict(test_images)
 
     # TODO: fix graphing
+    test_labels = [int(name*10)-1 for name in test_labels] # for graphing
     display_single_prediction(predictions, test_labels, test_images, class_names, 0)
     display_single_prediction2(test_labels,class_names,model,test_images[0])
     display_multiple_prediction(predictions, test_labels, test_images, class_names)
