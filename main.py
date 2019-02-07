@@ -27,7 +27,6 @@ if __name__ == "__main__":
 
     predictions = model.predict(test_images)
 
-    # TODO: fix graphing
     test_labels = [int(name*10)-1 for name in test_labels] # for graphing
     display_single_prediction(predictions, test_labels, test_images, class_names, 0)
     display_single_prediction2(test_labels,class_names,model,test_images[0])
