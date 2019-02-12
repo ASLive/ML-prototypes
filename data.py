@@ -1,4 +1,6 @@
 import os
+
+from PIL import Image, ImageOps
 import numpy as np
 import math
 import matplotlib.pyplot as plt
@@ -39,18 +41,20 @@ def read_data(TRAIN_DATA_PATH):
                     ## add image, letter to ret array
                     #image = plt.imread(image_path)
 
-                    ####tf.image.rgb_to_grayscale(image, name=None)
 
+                    img = Image.open(image_path)
+                    img = img.convert('L') # converts to black and white
+                    img.thumbnail((100, 100), Image.NEAREST)
+
+                    #plt.imshow(img)
+                    #plt.show()
+
+                    image = np.array(img)
+
+                    # outputs it green since it thinks it's reading in a RGB photo
                     #plt.imshow(image)
                     #plt.show()
 
-                    ## testing using pillow
-                    from PIL import Image
-                    img = Image.open(image_path).convert('L')
-                    img.thumbnail((100, 100), Image.ANTIALIAS)
-
-                    imgplot = plt.imshow(img)
-                    plt.show()
 
                     ret_images.append(image)
                     ret_labels.append(float_count)
