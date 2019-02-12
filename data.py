@@ -37,13 +37,25 @@ def read_data(TRAIN_DATA_PATH):
 
                 for image_path in image_path_list:
                     ## add image, letter to ret array
-                    image = plt.imread(image_path)
+                    #image = plt.imread(image_path)
+
+                    ####tf.image.rgb_to_grayscale(image, name=None)
+
+                    #plt.imshow(image)
+                    #plt.show()
+
+                    ## testing using pillow
+                    from PIL import Image
+                    img = Image.open(image_path).convert('L')
+                    img.thumbnail((100, 100), Image.ANTIALIAS)
+
+                    imgplot = plt.imshow(img)
+                    plt.show()
 
                     ret_images.append(image)
                     ret_labels.append(float_count)
 
-                    #plt.imshow(image)
-                    #plt.show()
+
 
                     ## add image, letter to ret array
                     ##image = load_img(image_path_list[i])  # this is a PIL image
