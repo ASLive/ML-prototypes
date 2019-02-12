@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from hand3d.utils.general import detect_keypoints, trafo_coords, plot_hand, plot_hand_3d
+
 
 def display(train_images, class_names, train_labels):
     """ display the first 25 images """
@@ -49,8 +51,16 @@ def plot_image(i, predictions_array, true_label, img, class_names):
     plt.grid(False)
     plt.xticks([])
     plt.yticks([])
-
-    plt.imshow(img, cmap=plt.cm.binary)
+    #
+    # plt.imshow(img, cmap=plt.cm.binary)
+    #
+    # fig = plt.figure(1)
+    # ax4 = fig.add_subplot(221, projection='3d')
+    plot_hand(img, plt)
+    # ax4.view_init(azim=-90.0, elev=-90.0)  # aligns the 3d coord with the camera view
+    # ax4.set_xlim([-3, 3])
+    # ax4.set_ylim([-3, 1])
+    # ax4.set_zlim([-3, 3])
 
     predicted_label = np.argmax(predictions_array)
     if predicted_label == true_label:
@@ -69,7 +79,8 @@ def plot_value_array(i, predictions_array, true_label):
     plt.grid(False)
     plt.xticks([])
     plt.yticks([])
-    thisplot = plt.bar(range(10), predictions_array, color="#777777")
+    # print(len(predictions_array))
+    thisplot = plt.bar(range(50), predictions_array, color="#777777")
     plt.ylim([0, 1])
     predicted_label = np.argmax(predictions_array)
     thisplot[predicted_label].set_color('red')
