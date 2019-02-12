@@ -42,7 +42,7 @@ def read_data(TRAIN_DATA_PATH):
     ret_images = []
     ret_labels = []
     ret_class_names = []
-    float_count = 0.0 # arbitrary map from letter to float
+    float_count = 0 # arbitrary map from letter to float
     for label in list(os.walk(TRAIN_DATA_PATH)): # walk directory
         full_path, image_list = label[0], label[2]
         letter = full_path[len(TRAIN_DATA_PATH)+1:] # get letter class
@@ -52,20 +52,21 @@ def read_data(TRAIN_DATA_PATH):
             if letter == "A" or letter == "B":
                 if len(image_path_list) > 0:
                     # iterate each image
-                    float_count += 0.1
-                    float_count = round(float_count,2)
+                    # float_count = round(float_count,2)
                     ret_class_names.append(letter)
                     # print(letter, float_count)
                     # print("training set of "+str(len(image_path_list)))
                     # for i in range(len(image_path_list)):
-                    #     # print(i)
-                    #     # read image and get hand from image
-                    #     image = get_hand(image_path_list[i])
-                    #     #
-                    #     # # add hand, letter to ret array
-                    #     ret_images.append(image)
+                    # #     # print(i)
+                    # #     # read image and get hand from image
+                    # #     image = get_hand(image_path_list[i])
+                    # #     #
+                    # #     # # add hand, letter to ret array
+                    # #     ret_images.append(image)
                     #     ret_labels.append(float_count)
-
+                    #
+                    # float_count += 1
+    #
     # with open("image_out","wb") as f:
     #     pickle.dump(ret_images,f)
     # with open("label_out","wb") as f:
