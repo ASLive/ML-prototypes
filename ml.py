@@ -3,16 +3,14 @@ import tensorflow as tf
 import keras
 from keras.models import model_from_json
 from os.path import isfile
-
-JSON_PATH = "./model.json"
-WEIGHTS_PATH = "./model.h5"
+from settings import JSON_PATH, WEIGHTS_PATH
 
 def setup():
+    num_clusters = 24
     return keras.Sequential([
         keras.layers.Flatten(input_shape=(21, 3)),
-        # keras.layers.Flatten(input_shape=(28, 28, 3)),
         keras.layers.Dense(128, activation=tf.nn.relu),
-        keras.layers.Dense(2, activation=tf.nn.softmax),
+        keras.layers.Dense(num_clusters, activation=tf.nn.softmax),
     ])
 
 def compile(model):
@@ -29,7 +27,6 @@ def ml_model(train_images, train_labels, retrain=False, save=True):
 def make_model(train_images, train_labels, save=True):
     model = setup()
     compile(model)
-    print(train_labels)
     model.fit(train_images, train_labels, epochs=5) # train
     return save_model(model) if save else model
 
