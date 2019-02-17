@@ -55,6 +55,8 @@ def process_data():
                     images.append(image)
                     labels.append(count)
 
+                count += 1
+
     # write data to binary files
     with open("./pickle/images.pickle","wb") as f:
         pickle.dump(images,f)
