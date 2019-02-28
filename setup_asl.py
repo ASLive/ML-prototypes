@@ -1,6 +1,8 @@
 from settings import ASL_TRAIN_PATH
 import tensorflow as tf
 import numpy as np
+import cv2
+import math
 import os
 import pickle
 import scipy.misc
@@ -24,12 +26,48 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
 sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 net.init(sess)
 
+def get_frames(video_file):
+    frames = []
+    vidcap = cv2.VideoCapture(video_file)
+    success = True
+    count = 0
+    while success:
+      success, image = vidcap.read()
+      if success:
+          h, w = image.shape[:2]
+          img_c = (w / 2, h / 2)
+
+          rot = cv2.getRotationMatrix2D(img_c, 270, 1)
+
+          rad = math.radians(270)
+          sin = math.sin(rad)
+          cos = math.cos(rad)
+          b_w = int((h * abs(sin)) + (w * abs(cos)))
+          b_h = int((h * abs(cos)) + (w * abs(sin)))
+
+          rot[0, 2] += ((b_w / 2) - img_c[0])
+          rot[1, 2] += ((b_h / 2) - img_c[1])
+
+          image = cv2.warpAffine(image, rot, (b_w, b_h), flags=cv2.INTER_LINEAR)
+          cv2.imwrite("frames/frame_%d.jpg" % count, image)     # save frame as JPEG file
+          frames.append(image)
+      count += 1
+
+    return frames
+
+
+
 def process_data():
+
+    # TODO: trim down frames
+    video_frames = get_frames('../asl-hello.mp4')
+
     """
     - read the training directory of asl images
     - preprocess the images with hand3d
     - save the images, labels, and classes as binary files
     """
+
     images = []
     labels = []
     classes = []
