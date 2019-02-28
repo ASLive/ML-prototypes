@@ -22,18 +22,19 @@ for s3_object in s3.Bucket(BUCKET_NAME).objects.all():
 
     path, filename = os.path.split(s3_object.key)
     print("path: " + path)
-    print("filename: " + filename + "\n")
+    print("filename: " + filename)
 
     if (path.startswith(model_s3_root)) and (filename != ''):
-        print("match\n")  # We have a file to download
+        #print("match\n")  # We have a file to download
 
         new_dir = path.replace(model_s3_root, '', 1)  # Strips out 'models/' from the path since this isn't a local dir
 
-        print('new_dir: ' + new_dir)
+        print('creating new directory path: ' + new_dir)
 
         if not os.path.exists(new_dir):  # We need to check if the os directories are in place to download it
             os.makedirs(new_dir)  # If not, we need to create the directory (or directories) for that file
         try:
+            print('downloading ' + filename + '...')
             s3.Bucket(BUCKET_NAME).download_file(s3_object.key, new_dir + '/' + filename)
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == "404":
