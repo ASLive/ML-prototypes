@@ -3,6 +3,7 @@ from graph import *
 from ml import *
 from data import *
 import sys
+from sklearn.metrics import *
 
 print("Tensorflow version "+tf.__version__)
 
@@ -23,11 +24,33 @@ if __name__ == "__main__":
     test_loss, test_acc = model.evaluate(test_images, test_labels)
     train_loss, train_acc = model.evaluate(train_images, train_labels)
 
-    print('Test accuracy:'+str(test_acc))
-    print('Train accuracy:'+str(train_acc))
-
     predictions_test = model.predict(test_images)
     predictions_train = model.predict(train_images)
+
+    pred_train = np.argmax(predictions_train, axis=1)
+    pred_test = np.argmax(predictions_test, axis=1)
+    actual_train = train_labels
+    actual_test = test_labels
+
+    accuracy_train = accuracy_score(actual_train, pred_train)
+    precision_train = precision_score(actual_train, pred_train, average='micro')
+    recall_train = recall_score(actual_train, pred_train, average='micro')
+    f1_train = f1_score(actual_train, pred_train, average='micro')
+
+    accuracy_test = accuracy_score(actual_test, pred_test)
+    precision_test = precision_score(actual_test, pred_test, average='micro')
+    recall_test = recall_score(actual_test, pred_test, average='micro')
+    f1_test = f1_score(actual_test, pred_test, average='micro')
+
+    print('\nTraining accuracy:\t' + str(accuracy_train))
+    print('Training precision:\t' + str(precision_train))
+    print('Training recall:\t' + str(recall_train))
+    print('Training f1:\t' + str(f1_train))
+
+    print('\nTesting accuracy:\t' + str(accuracy_test))
+    print('Testing precision:\t' + str(precision_test))
+    print('Testing recall:\t' + str(recall_test))
+    print('Testing f1:\t' + str(f1_test))
 
     if visualize_arg:
         # display test predictions
@@ -39,3 +62,4 @@ if __name__ == "__main__":
         display_single_prediction(predictions_train, train_labels, train_images, class_names, 0)
         display_single_prediction2(train_labels,class_names,model,train_images[0])
         display_multiple_prediction(predictions_train, train_labels, train_images, class_names)
+
