@@ -1,3 +1,5 @@
+# NOTE THIS REPO IS DEPRECATED, USE https://github.com/ASLive/machine-learning INSTEAD
+
 # ML-prototypes
 
 ## Overview
