@@ -7,6 +7,21 @@ from sklearn.metrics import *
 
 print("Tensorflow version "+tf.__version__)
 
+
+def calculate_metrics(predicted, actual):
+    TP = np.count_nonzero(predicted * actual)
+    TN = np.count_nonzero((predicted - 1) * (actual - 1))
+    FP = np.count_nonzero(predicted * (actual - 1))
+    FN = np.count_nonzero((predicted - 1) * actual)
+
+    accuracy = (TP + TN)/ (TP + FP + FN + TN)
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+    f1 = 2 * precision * recall / (precision + recall)
+
+    return accuracy, precision, recall, f1
+
+
 if __name__ == "__main__":
     """
        python3 main.py # load model files if available, else retrain and save
@@ -32,15 +47,18 @@ if __name__ == "__main__":
     actual_train = train_labels
     actual_test = test_labels
 
-    accuracy_train = accuracy_score(actual_train, pred_train)
-    precision_train = precision_score(actual_train, pred_train, average='micro')
-    recall_train = recall_score(actual_train, pred_train, average='micro')
-    f1_train = f1_score(actual_train, pred_train, average='micro')
+    # accuracy_train = accuracy_score(actual_train, pred_train)
+    # precision_train = precision_score(actual_train, pred_train, average='micro')
+    # recall_train = recall_score(actual_train, pred_train, average='micro')
+    # f1_train = f1_score(actual_train, pred_train, average='micro')
+    #
+    # accuracy_test = accuracy_score(actual_test, pred_test)
+    # precision_test = precision_score(actual_test, pred_test, average='micro')
+    # recall_test = recall_score(actual_test, pred_test, average='micro')
+    # f1_test = f1_score(actual_test, pred_test, average='micro')
 
-    accuracy_test = accuracy_score(actual_test, pred_test)
-    precision_test = precision_score(actual_test, pred_test, average='micro')
-    recall_test = recall_score(actual_test, pred_test, average='micro')
-    f1_test = f1_score(actual_test, pred_test, average='micro')
+    accuracy_train, precision_train, recall_train, f1_train = calculate_metrics(pred_train, actual_train)
+    accuracy_test, precision_test, recall_test, f1_test = calculate_metrics(pred_test, actual_test)
 
     print('\nTraining accuracy:\t' + str(accuracy_train))
     print('Training precision:\t' + str(precision_train))
@@ -62,4 +80,3 @@ if __name__ == "__main__":
         display_single_prediction(predictions_train, train_labels, train_images, class_names, 0)
         display_single_prediction2(train_labels,class_names,model,train_images[0])
         display_multiple_prediction(predictions_train, train_labels, train_images, class_names)
-
